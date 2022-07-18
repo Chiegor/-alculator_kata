@@ -1,5 +1,3 @@
-package calc;
-
 import enums.RomanNumEnum;
 import exception.ApplicationException;
 
