@@ -1,5 +1,6 @@
 import enums.RomanNumEnum;
 import exception.ApplicationException;
+import validation.Validation;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,25 +10,20 @@ public class Main {
 
     public static String calc(String input) throws ApplicationException {
         String[] inputArray = input.split(" ");
-
-        if (inputArray.length < 3) {
-            throw new ApplicationException("Строка не является математической операцией");
-        } else if (inputArray.length > 3) {
-            throw new ApplicationException("Формат математической операции не удовлетворяет заданию");
-        }
-
         String result = "";
 
-        if (isRoman(inputArray[0])) {
-            if (!isRoman(inputArray[2])) {
-                throw new ApplicationException("Используются одновременно разные системы счисления");
+        if (Validation.validInputLength(inputArray)) {
+            if (Validation.isRoman(inputArray[0])) {
+                if (!Validation.isRoman(inputArray[2])) {
+                    throw new ApplicationException("Используются одновременно разные системы счисления");
+                }
+                result = romanNumberCalc(inputArray[0], inputArray[2], inputArray[1]).name();
+            } else {
+                if (!Validation.isRoman(inputArray[2])) {
+                    result = String.valueOf(arabicNumberCalc(inputArray[0], inputArray[2], inputArray[1]));
+                } else
+                    throw new ApplicationException("Используются одновременно разные системы счисления");
             }
-            result = romanNumberCalc(inputArray[0], inputArray[2], inputArray[1]).name();
-        } else {
-            if (!isRoman(inputArray[2])) {
-                result = String.valueOf(arabicNumberCalc(inputArray[0], inputArray[2], inputArray[1]));
-            } else
-                throw new ApplicationException("Используются одновременно разные системы счисления");
         }
         return result;
     }
@@ -53,15 +49,7 @@ public class Main {
 
     public static RomanNumEnum romanNumberCalc(String first, String second, String procedure) throws ApplicationException {
         int solution = calculate(convertRomanToArabic(first), convertRomanToArabic(second), procedure);
-        if (solution <= 0) {
-            throw new ApplicationException("Результат меньше либо равен нулю");
-        }
-
-        if (solution > 100) {
-            throw new ApplicationException("Результат вычисления (" + solution + ") выходит за границы 100. " +
-                    "В условии сказано, что операции могут проводиться " +
-                    "только над числами от 1 до 10, поэтому 100 - максимальное значение");
-        }
+        Validation.validSolutionForRoman(solution);
         return convertArabicToRoman(solution);
     }
 
@@ -80,16 +68,6 @@ public class Main {
         for (RomanNumEnum num : RomanNumEnum.values()) {
             if (input.equals(num.name())) {
                 result = num.getValue();
-            }
-        }
-        return result;
-    }
-
-    public static boolean isRoman(String input) {
-        boolean result = false;
-        for (RomanNumEnum num : RomanNumEnum.values()) {
-            if (input.equals(num.name())) {
-                result = true;
             }
         }
         return result;
