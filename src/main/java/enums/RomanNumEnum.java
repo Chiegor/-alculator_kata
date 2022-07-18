@@ -1,7 +1,5 @@
 package enums;
 
-import java.util.Map;
-
 public enum RomanNumEnum {
     I(1),
     II(2),
@@ -22,9 +20,29 @@ public enum RomanNumEnum {
     XVII(17),
     XVIII(18),
     XIX(19),
-    XX(20);
+    XX(20),
+    XXI(21),
+    XXII(22),
+    XXIII(23),
+    XXIV(24),
+    XXV(25),
+    XXVI(26),
+    XXVII(27),
+    XXVIII(28),
+    XXIX(29),
+    XXX(30),
+    XXXI(31),
+    XXXII(32),
+    XXXIII(33),
+    XXXIV(34),
+    XXXV(35),
+    XXXVI(36),
+    XXXVII(37),
+    XXXVIII(38),
+    XXXIX(39),
+    XL(40);
 
-    private int value;
+    private final int value;
 
     RomanNumEnum(int value) {
         this.value = value;
