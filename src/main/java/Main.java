@@ -10,7 +10,9 @@ public class Main {
     public static String calc(String input) throws ApplicationException {
         String[] inputArray = input.split(" ");
 
-        if (inputArray.length > 3) {
+        if (inputArray.length < 3) {
+            throw new ApplicationException("Строка не является математической операцией");
+        } else if (inputArray.length > 3) {
             throw new ApplicationException("Формат математической операции не удовлетворяет заданию");
         }
 
@@ -30,26 +32,6 @@ public class Main {
         return result;
     }
 
-    public static int arabicNumberCalc(String first, String second, String procedure) throws ApplicationException {
-        return calculate(Integer.parseInt(first), Integer.parseInt(second), procedure);
-    }
-
-    public static RomanNumEnum romanNumberCalc(String first, String second, String procedure) throws ApplicationException {
-        int solution = calculate(convertRomanToArabic(first), convertRomanToArabic(second), procedure);
-
-        if (solution <= 0) {
-            throw new ApplicationException("Результат меньше либо равен нулю");
-        }
-
-        // это временная валидация!
-        if (solution > 21) {
-            throw new ApplicationException("Результат вычисления (" + solution + ") выходит за границы 20. " +
-                    "Да, можно было увеличить enum до 100 (максимально возможный результат), " +
-                    "но я немного поленился, а другого решения пока не придумал. Придумаю - будет до 100");
-        }
-        return convertArabicToRoman(solution);
-    }
-
     public static int calculate(int first, int second, String procedure) throws ApplicationException {
         switch (procedure) {
             case "+":
@@ -63,6 +45,23 @@ public class Main {
             default:
                 throw new ApplicationException("Строка " + procedure + " не является математической операцией");
         }
+    }
+
+    public static int arabicNumberCalc(String first, String second, String procedure) throws ApplicationException {
+        return calculate(Integer.parseInt(first), Integer.parseInt(second), procedure);
+    }
+
+    public static RomanNumEnum romanNumberCalc(String first, String second, String procedure) throws ApplicationException {
+        int solution = calculate(convertRomanToArabic(first), convertRomanToArabic(second), procedure);
+        if (solution <= 0) {throw new ApplicationException("Результат меньше либо равен нулю");}
+
+        // это временная валидация!
+        if (solution > 41) {
+            throw new ApplicationException("Результат вычисления (" + solution + ") выходит за границы 40. " +
+                    "Да, можно было увеличить enum до 100 (максимально возможный результат), " +
+                    "но я немного поленился, а другого решения пока не придумал. Придумаю - будет до 100");
+        }
+        return convertArabicToRoman(solution);
     }
 
     public static RomanNumEnum convertArabicToRoman(int number) {
@@ -94,7 +93,6 @@ public class Main {
         }
         return result;
     }
-
 
     public static void main(String[] args) throws IOException, ApplicationException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
