@@ -30,48 +30,11 @@ public class Main {
     }
 
     public static int arabicNumberCalc(String first, String second, String procedure) throws ApplicationException {
-        int result = 0;
-        switch (procedure) {
-            case "+":
-                result = Integer.parseInt(first) + Integer.parseInt(second);
-                break;
-            case  "-":
-                result = Integer.parseInt(first) - Integer.parseInt(second);
-                break;
-            case "*":
-                result = Integer.parseInt(first) * Integer.parseInt(second);
-                break;
-            case "/":
-                result = Integer.parseInt(first) / Integer.parseInt(second);
-                break;
-            default:
-                throw new ApplicationException("Строка " + procedure + " не является математической операцией");
-        }
-        return result;
+        return calculate(Integer.parseInt(first), Integer.parseInt(second), procedure);
     }
 
     public static RomanNumEnum romanNumberCalc(String first, String second, String procedure) throws ApplicationException {
-        int f = convertRomanToArabic(first);
-        int s = convertRomanToArabic(second);
-
-        int solution = 0;
-
-        switch (procedure) {
-            case "+":
-                solution = f + s;
-                break;
-            case "-":
-                solution = f - s;
-                break;
-            case "*":
-                solution = f * s;
-                break;
-            case "/":
-                solution = f / s;
-                break;
-            default:
-                throw new ApplicationException("Строка " + procedure + " не является математической операцией");
-        }
+        int solution = calculate(convertRomanToArabic(first), convertRomanToArabic(second), procedure);
 
         if (solution <= 0) {
             throw new ApplicationException("Результат меньше либо равен нулю");
@@ -83,8 +46,22 @@ public class Main {
                     "Да, можно было увеличить enum до 100 (максимально возможный результат), " +
                     "но я немного поленился, а другого решения пока не придумал. Придумаю - будет до 100");
         }
-
         return convertArabicToRoman(solution);
+    }
+
+    public static int calculate(int first, int second, String procedure) throws ApplicationException {
+        switch (procedure) {
+            case "+":
+                return first + second;
+            case "-":
+                return first - second;
+            case "*":
+                return first * second;
+            case "/":
+                return first / second;
+            default:
+                throw new ApplicationException("Строка " + procedure + " не является математической операцией");
+        }
     }
 
     public static RomanNumEnum convertArabicToRoman(int number) {
