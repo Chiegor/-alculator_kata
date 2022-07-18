@@ -53,13 +53,14 @@ public class Main {
 
     public static RomanNumEnum romanNumberCalc(String first, String second, String procedure) throws ApplicationException {
         int solution = calculate(convertRomanToArabic(first), convertRomanToArabic(second), procedure);
-        if (solution <= 0) {throw new ApplicationException("Результат меньше либо равен нулю");}
+        if (solution <= 0) {
+            throw new ApplicationException("Результат меньше либо равен нулю");
+        }
 
-        // это временная валидация!
-        if (solution > 41) {
-            throw new ApplicationException("Результат вычисления (" + solution + ") выходит за границы 40. " +
-                    "Да, можно было увеличить enum до 100 (максимально возможный результат), " +
-                    "но я немного поленился, а другого решения пока не придумал. Придумаю - будет до 100");
+        if (solution > 100) {
+            throw new ApplicationException("Результат вычисления (" + solution + ") выходит за границы 100. " +
+                    "В условии сказано, что операции могут проводиться " +
+                    "только над числами от 1 до 10, поэтому 100 - максимальное значение");
         }
         return convertArabicToRoman(solution);
     }
