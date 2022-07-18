@@ -21,9 +21,12 @@ public class Main {
                 throw new ApplicationException("Используются одновременно разные системы счисления");
             }
             result = romanNumberCalc(inputArray[0], inputArray[2], inputArray[1]).name();
-        } else
-            result = String.valueOf(arabicNumberCalc(inputArray[0], inputArray[2], inputArray[1]));
-
+        } else {
+            if (!isRoman(inputArray[2])) {
+                result = String.valueOf(arabicNumberCalc(inputArray[0], inputArray[2], inputArray[1]));
+            } else
+                throw new ApplicationException("Используются одновременно разные системы счисления");
+        }
         return result;
     }
 
