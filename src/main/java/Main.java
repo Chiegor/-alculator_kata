@@ -73,17 +73,16 @@ public class Main {
         return result;
     }
 
-    public static void main(String[] args) throws ApplicationException {
+    public static void main(String[] args) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             String input = "";
             while (!(input = reader.readLine()).equals("")) {
-                String result = Main.calc(input);
+                String result = null;
+                result = Main.calc(input);
                 System.out.println(result);
             }
-        } catch (IOException e) {
-            throw new ApplicationException("Ошибка ввода данных");
-        } catch (ApplicationException e) {
-            throw new ApplicationException("Ошибка приложения");
+        } catch (IOException | ApplicationException e) {
+            System.out.println("Ошибка ввода данных");
         }
     }
 }
