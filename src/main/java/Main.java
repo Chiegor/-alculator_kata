@@ -77,9 +77,7 @@ public class Main {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             String input = "";
             while (!(input = reader.readLine()).equals("")) {
-                String result = null;
-                result = Main.calc(input);
-                System.out.println(result);
+                System.out.println(Main.calc(input));
             }
         } catch (IOException | ApplicationException e) {
             System.out.println("Ошибка ввода данных");
